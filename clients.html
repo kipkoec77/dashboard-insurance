@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Clients - Majani Insurance Agent System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="logo">
+          <div class="logo-icon">M</div>
+          <div class="logo-text">MAJANI INSURANCE</div>
+        </a>
+      </div>
+      <div class="sidebar-nav">
+        <div class="nav-item">
+          <a href="dashboard.html" class="nav-link">
+            <div class="nav-icon"></div>
+            <span>Dashboard</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="clients.html" class="nav-link active">
+            <div class="nav-icon"></div>
+            <span>Clients</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="policies.html" class="nav-link">
+            <div class="nav-icon"></div>
+            <span>Policies</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="claims.html" class="nav-link">
+            <div class="nav-icon"></div>
+            <span>Claims</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="commissions.html" class="nav-link">
+            <div class="nav-icon"></div>
+            <span>Commissions</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="reports.html" class="nav-link">
+            <div class="nav-icon"></div>
+            <span>Reports</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="settings.html" class="nav-link">
+            <div class="nav-icon"></div>
+            <span>Settings</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Navigation -->
+      <header class="top-nav">
+        <div class="search-container">
+          <div class="search-icon"></div>
+          <input type="text" class="search-input" placeholder="Search clients..." id="clientSearch">
+        </div>
+        <div class="nav-actions">
+          <button class="notification-btn">
+            
+            <div class="notification-badge"></div>
+          </button>
+          <div class="user-profile" onclick="toggleUserMenu()">
+            <div class="user-avatar" id="userAvatar">D</div>
+            <div class="user-info">
+              <div class="user-name" id="userName">Dennis</div>
+              <div class="user-role">Insurance Agent</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="page-content">
+        <div class="page-header">
+          <h1 class="page-title">Clients Management</h1>
+          <p class="page-subtitle">Manage your insurance clients and their policies.</p>
+        </div>
+
+        <!-- Clients List -->
+        <div class="table-container">
+          <div class="table-header">
+            <h3 class="table-title">Clients List</h3>
+            <div class="table-filters">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="active">Active</button>
+              <button class="filter-btn" data-filter="expiring">Expiring Soon</button>
+              <button class="filter-btn" data-filter="expired">Expired</button>
+            </div>
+          </div>
+          
+          <div id="loadingMessage" class="loading">
+            <div class="spinner"></div>
+            Loading clients...
+          </div>
+          
+          <div id="clientsTable" class="clients-table" style="display: none;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Client Name</th>
+                  <th>Registration Number</th>
+                  <th>Policy</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTableBody">
+              </tbody>
+            </table>
+          </div>
+          
+          <div id="noClientsMessage" class="empty-state" style="display: none;">
+            <div class="empty-state-icon"></div>
+            <div class="empty-state-title">No clients found</div>
+            <div class="empty-state-description">Click the button below to add your first client.</div>
+          </div>
+        </div>
+
+        <!-- Add New Client Button -->
+        <div class="add-client-button-container">
+          <button id="addClientBtn" class="btn btn-primary">Add New Client</button>
+        </div>
+
+        <!-- Add Client Form -->
+        <div class="form-container" id="addClientForm" style="display: none;">
+          <h3 class="form-title">Add New Client</h3>
+          <form id="clientForm" class="client-form">
+            <div class="form-section">
+              <h4 class="section-title">CLIENT INFORMATION</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="fullName">Full Name</label>
+                  <input type="text" id="fullName" name="fullName" placeholder="Enter client's full name" required>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" placeholder="e.g., +254 700 123 456" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="client@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" id="address" name="address" placeholder="Enter client's address">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h4 class="section-title">VEHICLE INFORMATION</h4>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="vehicleNumber">Registration Number</label>
+                  <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="e.g., KAA 123A" required>
+                </div>
+                <div class="form-group">
+                  <label for="startDate">Start Date</label>
+                  <input type="date" id="startDate" name="startDate" required>
+                </div>
+                <div class="form-group">
+                  <label for="policyType">Policy Type</label>
+                  <select id="policyType" name="policyType" required>
+                    <option value="">Select Policy Type</option>
+                    <option value="Comprehensive">Comprehensive</option>
+                    <option value="Third Party">Third Party</option>
+                    <option value="Third Party Fire & Theft">Third Party Fire & Theft</option>
+                    <option value="Act Only">Act Only</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="premium">Premium (KSh)</label>
+                  <input type="number" id="premium" name="premium" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                  <label for="earned">Earned (KSh)</label>
+                  <input type="number" id="earned" name="earned" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                  <label for="commission">Commission Earned (KSh)</label>
+                  <input type="number" id="commission" name="commission" step="0.01" min="0" placeholder="0.00" required>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn btn-primary">Save Client</button>
+          </form>
+          
+          <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+          <div id="errorMessage" class="alert alert-error" style="display: none;"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Firebase v9+ Modular SDK -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="clients.js"></script>
+  <script>
+    document.getElementById("addClientBtn").addEventListener("click", () => {
+      const form = document.getElementById("addClientForm");
+      form.style.display = form.style.display === "none" ? "block" : "none";
+    });
+  </script>
+</body>
+</html>
