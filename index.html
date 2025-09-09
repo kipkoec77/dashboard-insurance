@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Majani Insurance Agent System</title>
+    <meta http-equiv="refresh" content="0; url=./login.html">
     <script>
-        // Redirect to login page on initial load
-        window.location.href = './login.html';
+        // Fallback redirect for browsers that don't support meta refresh
+        window.location.replace('./login.html');
     </script>
 </head>
 <body>
     <p>Redirecting to login...</p>
+    <noscript>
+        <p><a href="./login.html">Click here if you are not automatically redirected</a></p>
+    </noscript>
 </body>
 </html>
