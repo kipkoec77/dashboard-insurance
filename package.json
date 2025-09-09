@@ -1,12 +1,17 @@
 {
-  "name": "ms",
+  "name": "majani-insurance-cms",
   "version": "1.0.0",
-  "main": "app.js",
+  "description": "Majani Insurance Agent Management System",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["insurance", "cms", "agent", "management"],
+  "author": "Tech Savvy",
   "license": "ISC",
-  "description": ""
+  "engines": {
+    "node": ">=14.x"
+  }
 }
