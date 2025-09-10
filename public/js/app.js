@@ -46,13 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "dashboard.html";
           }
         } else if (isDashboardPage) {
-          // Check if profile is complete when accessing dashboard
-          const profileComplete = await checkProfileCompletion(db, user);
-          
-          if (!profileComplete) {
-            console.log("Profile incomplete, redirecting to settings...");
-            window.location.href = "settings.html";
-          }
+          // User is on dashboard and authenticated - no redirect needed
+          console.log("User on dashboard - authenticated");
         }
       } else {
         // User is signed out
