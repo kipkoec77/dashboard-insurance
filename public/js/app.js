@@ -35,16 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("User signed in:", user.email);
         
         if (isLoginPage) {
-          // Check if profile is complete before redirecting
-          const profileComplete = await checkProfileCompletion(db, user);
-          
-          if (!profileComplete) {
-            console.log("Profile incomplete, redirecting to settings...");
-            window.location.href = "settings.html";
-          } else {
-            console.log("Profile complete, redirecting to dashboard...");
-            window.location.href = "dashboard.html";
-          }
+          // Redirect directly to dashboard after login
+          console.log("Redirecting to dashboard...");
+          window.location.href = "dashboard.html";
         } else if (isDashboardPage) {
           // User is on dashboard and authenticated - no redirect needed
           console.log("User on dashboard - authenticated");
@@ -129,40 +122,4 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000); // Wait 1 second for Firebase to initialize
 });
 
-// Function to check if user profile is complete
-async function checkProfileCompletion(db, user) {
-  try {
-    // Check if user document exists in Firestore
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    
-    if (!userDoc.exists()) {
-      console.log("User document does not exist - profile incomplete");
-      return false;
-    }
-    
-    const userData = userDoc.data();
-    
-    // Check if required fields are filled
-    const requiredFields = ['name', 'phone', 'address'];
-    const missingFields = requiredFields.filter(field => !userData[field] || userData[field].trim() === '');
-    
-    if (missingFields.length > 0) {
-      console.log("Missing required fields:", missingFields);
-      return false;
-    }
-    
-    // Check if user has changed their password (not using default)
-    // We can check if mustChangePassword is false or doesn't exist
-    if (userData.mustChangePassword === true) {
-      console.log("User must change password - profile incomplete");
-      return false;
-    }
-    
-    console.log("Profile is complete");
-    return true;
-    
-  } catch (error) {
-    console.error("Error checking profile completion:", error);
-    return false;
-  }
-}
+// Profile completion function removed - users go directly to dashboard
