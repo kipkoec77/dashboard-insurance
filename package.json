@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "vercel dev",
-    "build": "if not exist public mkdir public && copy *.html public\\ && copy *.css public\\ && xcopy js public\\js\\ /E /I /Y && if exist assets xcopy assets public\\assets\\ /E /I /Y",
+    "build": "echo 'Static site ready - files already in public directory'",
     "deploy": "vercel --prod"
   },
   "keywords": ["insurance", "cms", "agent", "management"],

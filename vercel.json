@@ -1,5 +1,5 @@
 {
-  "buildCommand": "if not exist public mkdir public && copy *.html public\\ && copy *.css public\\ && xcopy js public\\js\\ /E /I /Y && if exist assets xcopy assets public\\assets\\ /E /I /Y",
+  "buildCommand": "echo 'Static site ready - files already in public directory'",
   "outputDirectory": "public",
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
