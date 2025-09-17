@@ -1,3 +1,6 @@
+// Import Firebase Firestore functions
+import { collection, getDocs, getDoc, doc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
 // Modern Dashboard Interactive Elements
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Dashboard loaded");
@@ -31,9 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const profileComplete = await checkProfileCompletion(db, user);
         
         if (!profileComplete) {
-          console.log("Profile incomplete, redirecting to settings...");
-          window.location.href = "settings.html";
-          return;
+          console.log("Profile incomplete, showing reminder banner (no redirect)");
+          showProfileIncompleteBanner();
+          // Continue initializing dashboard without redirect
         }
         
         initializeDashboard(auth, db, user);
@@ -283,6 +286,33 @@ function showNotification(message, type = 'info', duration = 3000) {
   }, duration);
 }
 
+// Function to show profile incomplete banner on dashboard
+function showProfileIncompleteBanner() {
+  // Avoid duplicating the banner
+  if (document.querySelector('#profile-incomplete-banner')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'profile-incomplete-banner';
+  banner.className = 'notification notification-warning show';
+  banner.innerHTML = `
+    <div class="notification-content">
+      <span class="notification-message">Please complete your profile to get the most out of the dashboard.</span>
+      <div class="notification-actions">
+        <button class="btn btn-sm" id="dismiss-profile-banner">Dismiss</button>
+        <button class="btn btn-primary btn-sm" id="go-complete-profile">Complete now</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(banner);
+
+  const dismissBtn = document.getElementById('dismiss-profile-banner');
+  const gotoBtn = document.getElementById('go-complete-profile');
+  if (dismissBtn) dismissBtn.addEventListener('click', () => banner.remove());
+  if (gotoBtn) gotoBtn.addEventListener('click', () => {
+    window.location.href = 'settings.html';
+  });
+}
+
 // Function to check if user profile is complete
 async function checkProfileCompletion(db, user) {
   try {
@@ -368,7 +398,9 @@ function updateUserDisplay(name) {
 
 async function loadDashboardData(db) {
   try {
-    // Load clients data
+    console.log("Loading dashboard data...");
+    
+    // Fetch clients from Firestore
     const clientsSnapshot = await getDocs(collection(db, "clients"));
     const clients = [];
     
@@ -387,8 +419,14 @@ async function loadDashboardData(db) {
     // Update recent clients table
     updateRecentClientsTable(clients);
     
+    // Update renewal reminders
+    updateRenewalReminders(clients);
+    
   } catch (error) {
     console.error("Error loading dashboard data:", error);
+    if (error.code === 'permission-denied') {
+      console.error("Permission denied - check Firebase security rules");
+    }
   }
 }
 
@@ -448,100 +486,123 @@ function updateRecentClientsTable(clients) {
   if (recentClients.length === 0) {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td colspan="4" class="text-center text-muted">No clients found</td>
+      <td colspan="5" class="text-center">No recent clients</td>
     `;
     tableBody.appendChild(row);
     return;
   }
   
-  // Add client rows
   recentClients.forEach(client => {
-    const row = createClientRow(client);
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${client.name || 'N/A'}</td>
+      <td>${client.policyType || 'N/A'}</td>
+      <td>${client.premium ? `KSh ${client.premium.toLocaleString()}` : 'N/A'}</td>
+      <td>${client.commission ? `KSh ${client.commission.toLocaleString()}` : 'N/A'}</td>
+      <td>${client.createdAt ? new Date(client.createdAt).toLocaleDateString() : 'N/A'}</td>
+    `;
     tableBody.appendChild(row);
   });
 }
 
-function createClientRow(client) {
-  const row = document.createElement("tr");
+function updateRenewalReminders(clients) {
+  const reminderContainer = document.getElementById("renewalReminders");
+  const reminderCount = document.getElementById("reminderCount");
+  const noReminders = document.getElementById("noReminders");
   
-  // Calculate policy status
-  const startDate = new Date(client.startDate);
-  const oneYearLater = new Date(startDate);
-  oneYearLater.setFullYear(startDate.getFullYear() + 1);
-  const now = new Date();
+  if (!reminderContainer) return;
   
-  let status = "Active";
-  let statusClass = "status-active";
+  const today = new Date();
+  const thirtyDaysFromNow = new Date(today.getTime() + (30 * 24 * 60 * 60 * 1000));
   
-  if (now > oneYearLater) {
-    status = "Expired";
-    statusClass = "status-expired";
-  } else {
-    const daysUntilExpiry = Math.ceil((oneYearLater - now) / (1000 * 60 * 60 * 24));
-    if (daysUntilExpiry <= 30) {
-      status = "Expiring Soon";
-      statusClass = "status-expiring";
-    }
+  // Filter clients with renewals due in the next 30 days
+  const upcomingRenewals = clients.filter(client => {
+    if (!client.renewalDate) return false;
+    const renewalDate = new Date(client.renewalDate);
+    return renewalDate >= today && renewalDate <= thirtyDaysFromNow;
+  }).sort((a, b) => new Date(a.renewalDate) - new Date(b.renewalDate));
+  
+  // Update reminder count
+  if (reminderCount) {
+    reminderCount.textContent = upcomingRenewals.length;
+    reminderCount.style.display = upcomingRenewals.length > 0 ? 'inline' : 'none';
   }
   
-  row.innerHTML = `
-    <td>${client.fullName || "N/A"}</td>
-    <td>${client.vehicleNumber || "N/A"}</td>
-    <td>${client.policyType || "N/A"}</td>
-    <td><span class="status-badge ${statusClass}">${status}</span></td>
-  `;
+  // Clear existing reminders
+  reminderContainer.innerHTML = '';
   
-  return row;
-}
-
-function setupEventListeners(auth) {
-  // Set up logout functionality
-  const userProfile = document.querySelector(".user-profile");
-  if (userProfile) {
-    userProfile.addEventListener("click", async () => {
-      if (confirm("Are you sure you want to logout?")) {
-        try {
-          await signOut(auth);
-          console.log("Logout successful");
-        } catch (error) {
-          console.error("Logout error:", error);
-        }
-      }
-    });
+  if (upcomingRenewals.length === 0) {
+    reminderContainer.appendChild(noReminders);
+    return;
   }
-}
-
-function setupSearch() {
-  const searchInput = document.getElementById("dashboardSearch");
   
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      const searchTerm = e.target.value.toLowerCase();
-      console.log("Searching for:", searchTerm);
-      // Implement search functionality here
-    });
-  }
-}
-
-function setupFilters() {
-  const filterButtons = document.querySelectorAll(".filter-btn");
-  
-  filterButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      // Remove active class from all buttons
-      filterButtons.forEach(btn => btn.classList.remove("active"));
-      
-      // Add active class to clicked button
-      button.classList.add("active");
-      
-      const filter = button.getAttribute("data-filter");
-      console.log("Filter applied:", filter);
-      // Implement filter functionality here
-    });
+  // Create reminder items
+  upcomingRenewals.forEach(client => {
+    const renewalDate = new Date(client.renewalDate);
+    const daysUntilRenewal = Math.ceil((renewalDate - today) / (1000 * 60 * 60 * 24));
+    
+    const reminderItem = document.createElement('div');
+    reminderItem.className = 'renewal-item';
+    reminderItem.innerHTML = `
+      <div class="renewal-info">
+        <div class="client-name">${client.fullName || 'N/A'}</div>
+        <div class="renewal-details">
+          <span class="vehicle-reg">${client.vehicleNumber || 'N/A'}</span>
+          <span class="policy-type">${client.policyType || 'N/A'}</span>
+        </div>
+      </div>
+      <div class="renewal-date-info">
+        <div class="renewal-date">${renewalDate.toLocaleDateString()}</div>
+        <div class="days-remaining ${daysUntilRenewal <= 7 ? 'urgent' : 'warning'}">
+          ${daysUntilRenewal} day${daysUntilRenewal !== 1 ? 's' : ''} left
+        </div>
+      </div>
+      <div class="renewal-actions">
+        <button class="btn btn-sm btn-primary" onclick="contactClient('${client.phone || ''}', '${client.email || ''}')">
+          Contact
+        </button>
+      </div>
+    `;
+    
+    reminderContainer.appendChild(reminderItem);
   });
 }
 
-// Global functions
-window.toggleUserMenu = function() {
-  console.log("Toggle user menu");
-};
+function contactClient(phone, email) {
+  let contactOptions = [];
+  
+  if (phone) {
+    contactOptions.push(`<a href="tel:${phone}" class="contact-option">📞 Call ${phone}</a>`);
+    contactOptions.push(`<a href="sms:${phone}" class="contact-option">💬 SMS ${phone}</a>`);
+  }
+  
+  if (email) {
+    contactOptions.push(`<a href="mailto:${email}" class="contact-option">📧 Email ${email}</a>`);
+  }
+  
+  if (contactOptions.length === 0) {
+    showNotification('No contact information available for this client', 'warning');
+    return;
+  }
+  
+  const modal = document.createElement('div');
+  modal.className = 'contact-modal';
+  modal.innerHTML = `
+    <div class="modal-overlay" onclick="this.parentElement.remove()">
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <h3>Contact Client</h3>
+        <div class="contact-options">
+          ${contactOptions.join('')}
+        </div>
+        <button class="btn btn-secondary" onclick="this.closest('.contact-modal').remove()">Close</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+}
+
+// Placeholder functions for features referenced later in the file
+function setupEventListeners() {}
+function setupSearch() {}
+function setupFilters() {}

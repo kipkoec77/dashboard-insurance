@@ -114,8 +114,11 @@
               <thead>
                 <tr>
                   <th>Client Name</th>
-                  <th>Registration Number</th>
-                  <th>Policy</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>Vehicle Reg</th>
+                  <th>Policy Type</th>
+                  <th>Renewal Date</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
@@ -133,8 +136,8 @@
         </div>
 
         <!-- Add New Client Button -->
-        <div class="add-client-button-container">
-          <button id="addClientBtn" class="btn btn-primary">Add New Client</button>
+        <div class="add-client-button-container" style="display: block !important; margin: 2rem 0; text-align: center; padding: 1rem; background: #ffffff; border: 2px dashed #e0e0e0; border-radius: 8px;">
+          <button id="addClientBtn" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1rem; font-weight: 600; min-width: 200px; background: #2e7d32; color: white; border: none; border-radius: 6px; cursor: pointer;">Add New Client</button>
         </div>
 
         <!-- Add Client Form -->
@@ -173,6 +176,11 @@
                 <div class="form-group">
                   <label for="startDate">Start Date</label>
                   <input type="date" id="startDate" name="startDate" required>
+                </div>
+                <div class="form-group">
+                  <label for="renewalDate">Renewal Date (Auto-calculated)</label>
+                  <input type="date" id="renewalDate" name="renewalDate" readonly class="readonly-field">
+                  <small class="field-help">Automatically set to one year after start date</small>
                 </div>
                 <div class="form-group">
                   <label for="policyType">Policy Type</label>

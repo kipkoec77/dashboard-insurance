@@ -100,10 +100,10 @@
                         <div class="user-menu" id="userMenu">
                             <button class="user-profile-btn" id="userProfileBtn">
                                 <div class="user-avatar">
-                                    <img src="https://via.placeholder.com/40x40/4F46E5/FFFFFF?text=D" alt="User Avatar">
+                                    <div class="user-avatar-placeholder" id="userAvatar">U</div>
                                 </div>
                                 <div class="user-info">
-                                    <span class="user-name" id="userName">Dennis Kipkoech</span>
+                                    <span class="user-name" id="userName">Loading...</span>
                                     <span class="user-role">Insurance Agent</span>
                                 </div>
                                 <i class="fas fa-chevron-down dropdown-icon"></i>
@@ -138,7 +138,7 @@
                         <p class="page-subtitle">Welcome back! Here's what's happening with your insurance business.</p>
                     </div>
                     <div class="header-actions">
-                        <button class="btn btn-primary">
+                        <button class="btn btn-primary" onclick="window.location.href='clients.html'">
                             <i class="fas fa-plus"></i>
                             Add New Client
                         </button>
@@ -158,7 +158,7 @@
                             </div>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-value" id="totalClients">1,234</h3>
+                            <h3 class="stat-value" id="totalClients">0</h3>
                             <p class="stat-label">Total Clients</p>
                         </div>
                     </div>
@@ -174,7 +174,7 @@
                             </div>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-value" id="activePolicies">856</h3>
+                            <h3 class="stat-value" id="activePolicies">0</h3>
                             <p class="stat-label">Active Policies</p>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
                             </div>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-value" id="pendingClaims">23</h3>
+                            <h3 class="stat-value" id="pendingClaims">0</h3>
                             <p class="stat-label">Pending Claims</p>
                         </div>
                     </div>
@@ -206,8 +206,29 @@
                             </div>
                         </div>
                         <div class="stat-content">
-                            <h3 class="stat-value" id="totalRevenue">KES 2.4M</h3>
+                            <h3 class="stat-value" id="totalRevenue">KSh 0</h3>
                             <p class="stat-label">Total Revenue</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Renewal Reminders -->
+                <div class="renewal-reminders-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-bell"></i>
+                                Renewal Reminders
+                            </h3>
+                            <span class="reminder-count" id="reminderCount">0</span>
+                        </div>
+                        <div class="card-body">
+                            <div id="renewalReminders" class="renewal-list">
+                                <div class="empty-state" id="noReminders">
+                                    <i class="fas fa-check-circle"></i>
+                                    <p>No upcoming renewals in the next 30 days</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -220,35 +241,13 @@
                             <a href="#" class="view-all-link">View All</a>
                         </div>
                         <div class="card-content">
-                            <div class="activity-list">
-                                <div class="activity-item">
-                                    <div class="activity-icon new-client">
-                                        <i class="fas fa-user-plus"></i>
+                            <div class="activity-list" id="activityList">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">
+                                        <i class="fas fa-clock"></i>
                                     </div>
-                                    <div class="activity-content">
-                                        <p class="activity-text">New client <strong>John Doe</strong> added</p>
-                                        <span class="activity-time">2 hours ago</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="activity-item">
-                                    <div class="activity-icon policy-update">
-                                        <i class="fas fa-file-alt"></i>
-                                    </div>
-                                    <div class="activity-content">
-                                        <p class="activity-text">Policy <strong>POL-2024-001</strong> renewed</p>
-                                        <span class="activity-time">4 hours ago</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="activity-item">
-                                    <div class="activity-icon claim-submitted">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                    </div>
-                                    <div class="activity-content">
-                                        <p class="activity-text">Claim submitted by <strong>Mary Johnson</strong></p>
-                                        <span class="activity-time">6 hours ago</span>
-                                    </div>
+                                    <div class="empty-state-title">No Recent Activity</div>
+                                    <div class="empty-state-description">Activity will appear here as you manage clients and policies.</div>
                                 </div>
                             </div>
                         </div>

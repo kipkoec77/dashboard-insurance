@@ -40,9 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const profileComplete = await checkProfileCompletion(db, user);
       
       if (profileComplete) {
-        console.log("Profile already complete, redirecting to dashboard...");
-        window.location.href = "dashboard.html";
-        return;
+        console.log("Profile already complete; staying on settings (no auto-redirect)");
+        // No redirect; allow user to view/update settings as desired
       }
       
       initializeSettingsPage(auth, db, user);
@@ -342,15 +341,10 @@ async function updateProfile(db, auth) {
     if (profileComplete) {
       successMessage.innerHTML = "Profile updated successfully! <br><strong>Your profile is now complete!</strong>";
       
-      // Show redirect message after 2 seconds
+      // Keep user on settings; optionally suggest navigating back
       setTimeout(() => {
-        successMessage.innerHTML = "Profile updated successfully! <br><strong>Redirecting to dashboard...</strong>";
-        
-        // Redirect to dashboard after 3 seconds
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 3000);
-      }, 2000);
+        successMessage.innerHTML = "Profile updated successfully! <br><strong>Your profile is now complete!</strong>";
+      }, 1000);
     } else {
       setTimeout(() => {
         successMessage.style.display = "none";

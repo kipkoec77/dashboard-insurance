@@ -5,7 +5,22 @@ import { getDoc, doc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-
 document.addEventListener("DOMContentLoaded", () => {
   console.log("App loaded");
   
-  // Wait a bit for Firebase to initialize
+  // Check if we are on login page or dashboard
+  const isLoginPage = window.location.pathname.includes("login.html");
+  const isDashboardPage = window.location.pathname.includes("dashboard.html");
+  const isIndexPage = window.location.pathname.includes("index.html") || window.location.pathname === "/";
+  const isSettingsPage = window.location.pathname.includes("settings.html");
+  
+  console.log("Current page - Login:", isLoginPage, "Dashboard:", isDashboardPage, "Index:", isIndexPage, "Settings:", isSettingsPage);
+  
+  // Handle index page redirect immediately
+  if (isIndexPage) {
+    console.log("On index page - redirecting to login...");
+    window.location.href = "login.html";
+    return; // Exit early to prevent further execution
+  }
+  
+  // Wait a bit for Firebase to initialize (only for other pages)
   setTimeout(() => {
     // Access Firebase services from window
     const { auth, db } = window.firebaseServices || {};
@@ -16,15 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     console.log(" Firebase services loaded successfully!");
-    
-    // Check if we are on login page or dashboard
-    const isLoginPage = window.location.pathname.includes("login.html");
-    const isDashboardPage = window.location.pathname.includes("dashboard.html") || 
-                           window.location.pathname.includes("index.html") || 
-                           window.location.pathname === "/";
-    const isSettingsPage = window.location.pathname.includes("settings.html");
-    
-    console.log("Current page - Login:", isLoginPage, "Dashboard:", isDashboardPage, "Settings:", isSettingsPage);
     
     // Set up authentication state observer
     onAuthStateChanged(auth, async (user) => {

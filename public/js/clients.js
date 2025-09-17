@@ -6,38 +6,60 @@ import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc } from "
 let globalAuth = null;
 let globalDb = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+// Initialize the clients page
+document.addEventListener("DOMContentLoaded", async () => {
   console.log("Clients page loaded");
   
-  // Wait for Firebase to initialize
-  setTimeout(() => {
+  try {
+    // Import Firebase services
     const { auth, db } = window.firebaseServices || {};
     
     if (!auth || !db) {
-      console.error("❌ Firebase services failed to load");
+      console.error("Firebase services not available");
       return;
     }
     
-    console.log("✅ Firebase services loaded successfully!");
-    
-    // Store globally for use in other functions
-    globalAuth = auth;
-    globalDb = db;
-    
     // Check authentication
+    const { onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js");
+    
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        // User not authenticated, redirect to login
+      if (user) {
+        console.log("User authenticated:", user.uid);
+        initializeClientsPage(auth, db, user);
+      } else {
         console.log("User not authenticated, redirecting to login");
         window.location.href = "login.html";
-        return;
       }
-      
-      console.log("User authenticated:", user.email);
-      initializeClientsPage(auth, db, user);
     });
-  }, 1000);
+    
+  } catch (error) {
+    console.error("Error initializing clients page:", error);
+  }
 });
+
+// Auto-calculate renewal date when start date changes
+function setupRenewalDateCalculation() {
+  const startDateInput = document.getElementById("startDate");
+  const renewalDateInput = document.getElementById("renewalDate");
+  
+  if (startDateInput && renewalDateInput) {
+    startDateInput.addEventListener("change", function() {
+      if (this.value) {
+        const startDate = new Date(this.value);
+        const renewalDate = new Date(startDate);
+        renewalDate.setFullYear(startDate.getFullYear() + 1);
+        
+        // Format date as YYYY-MM-DD for input field
+        const renewalDateString = renewalDate.toISOString().split('T')[0];
+        renewalDateInput.value = renewalDateString;
+        
+        console.log("Auto-calculated renewal date:", renewalDateString);
+      } else {
+        renewalDateInput.value = "";
+      }
+    });
+  }
+}
 
 async function initializeClientsPage(auth, db, user) {
   // Load user profile
@@ -45,6 +67,9 @@ async function initializeClientsPage(auth, db, user) {
   
   // Set up event listeners
   setupEventListeners(auth);
+  
+  // Set up renewal date calculation
+  setupRenewalDateCalculation();
   
   // Set up form submission
   setupFormSubmission(db, auth);
@@ -100,6 +125,43 @@ function setupEventListeners(auth) {
       }
     });
   }
+  
+  // Set up Add Client button functionality
+  const addClientBtn = document.getElementById("addClientBtn");
+  const addClientForm = document.getElementById("addClientForm");
+  
+  console.log("Button element:", addClientBtn);
+  console.log("Form element:", addClientForm);
+  
+  if (addClientBtn && addClientForm) {
+    console.log("Setting up button click listener");
+    
+    // Ensure form starts hidden
+    addClientForm.style.display = "none";
+    
+    addClientBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log("Add Client button clicked");
+      console.log("Current form display before toggle:", addClientForm.style.display);
+      
+      // Simple toggle - check current inline style
+      if (addClientForm.style.display === "none" || addClientForm.style.display === "") {
+        addClientForm.style.display = "block";
+        console.log("Form shown - display set to:", addClientForm.style.display);
+        // Scroll to form when shown
+        setTimeout(() => {
+          addClientForm.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      } else {
+        addClientForm.style.display = "none";
+        console.log("Form hidden - display set to:", addClientForm.style.display);
+      }
+    });
+  } else {
+    console.error("Button or form not found!");
+    console.error("Button:", addClientBtn);
+    console.error("Form:", addClientForm);
+  }
 }
 
 function setupFormSubmission(db, auth) {
@@ -122,6 +184,7 @@ function setupFormSubmission(db, auth) {
         address: document.getElementById("address").value.trim(),
         vehicleNumber: document.getElementById("vehicleNumber").value.trim(),
         startDate: document.getElementById("startDate").value,
+        renewalDate: document.getElementById("renewalDate").value,
         policyType: document.getElementById("policyType").value,
         premium: parseFloat(document.getElementById("premium").value) || 0,
         earned: parseFloat(document.getElementById("earned").value) || 0,
@@ -144,6 +207,10 @@ function setupFormSubmission(db, auth) {
       successMessage.style.display = "none";
       
       try {
+        console.log("Attempting to add client to Firestore...");
+        console.log("Database instance:", db);
+        console.log("Form data to save:", formData);
+        
         // Add document to Firestore
         const docRef = await addDoc(collection(db, "clients"), formData);
         console.log("Client added with ID:", docRef.id);
@@ -155,17 +222,36 @@ function setupFormSubmission(db, auth) {
         successMessage.textContent = "Client added successfully!";
         successMessage.style.display = "block";
         
-        // Hide success message after 3 seconds
-        setTimeout(() => {
-          successMessage.style.display = "none";
-        }, 3000);
+        // Reset form
+        clientForm.reset();
         
-        // Reload clients
+        // Reload clients list to show new client immediately
         await loadClients(db);
+        
+        // Hide form after successful submission
+        setTimeout(() => {
+          addClientForm.style.display = "none";
+          successMessage.style.display = "none";
+        }, 2000);
         
       } catch (error) {
         console.error("Error adding client:", error);
-        errorMessage.textContent = `Error adding client: ${error.message}`;
+        console.error("Error details:", error.message);
+        console.error("Error code:", error.code);
+        
+        let errorText = "Error adding client. Please try again.";
+        
+        // Handle specific Firebase errors
+        if (error.code === 'permission-denied') {
+          errorText = "Permission denied. Please check your Firebase security rules.";
+        } else if (error.code === 'unavailable') {
+          errorText = "Service unavailable. Please check your internet connection.";
+        } else if (error.message) {
+          errorText = `Error: ${error.message}`;
+        }
+        
+        // Show error message
+        errorMessage.textContent = errorText;
         errorMessage.style.display = "block";
       } finally {
         // Re-enable submit button
@@ -193,6 +279,24 @@ function validateFormData(formData) {
     return false;
   }
   
+  // Enhanced phone validation
+  const phoneRegex = /^(\+254|0)[17]\d{8}$/; // Kenyan phone format
+  if (!phoneRegex.test(formData.phone.replace(/\s+/g, ''))) {
+    errorMessage.textContent = "Please enter a valid phone number (e.g., +254 700 123 456 or 0700 123 456).";
+    errorMessage.style.display = "block";
+    return false;
+  }
+  
+  // Enhanced email validation (if provided)
+  if (formData.email && formData.email.trim() !== '') {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      errorMessage.textContent = "Please enter a valid email address.";
+      errorMessage.style.display = "block";
+      return false;
+    }
+  }
+  
   if (!formData.vehicleNumber) {
     errorMessage.textContent = "Vehicle registration number is required.";
     errorMessage.style.display = "block";
@@ -201,6 +305,12 @@ function validateFormData(formData) {
   
   if (!formData.startDate) {
     errorMessage.textContent = "Start date is required.";
+    errorMessage.style.display = "block";
+    return false;
+  }
+  
+  if (!formData.renewalDate) {
+    errorMessage.textContent = "Renewal date is required.";
     errorMessage.style.display = "block";
     return false;
   }
@@ -232,6 +342,9 @@ async function loadClients(db) {
   const noClientsMessage = document.getElementById("noClientsMessage");
   const clientsTableBody = document.getElementById("clientsTableBody");
   
+  console.log("Starting to load clients...");
+  console.log("Database instance:", db);
+  
   // Show loading message
   loadingMessage.style.display = "block";
   clientsTable.style.display = "none";
@@ -239,13 +352,16 @@ async function loadClients(db) {
   
   try {
     // Get all documents from clients collection
+    console.log("Fetching clients from Firestore...");
     const querySnapshot = await getDocs(collection(db, "clients"));
+    console.log("Query snapshot received:", querySnapshot);
     
     // Clear existing table rows
     clientsTableBody.innerHTML = "";
     
     if (querySnapshot.empty) {
       // No clients found
+      console.log("No clients found in database");
       loadingMessage.style.display = "none";
       noClientsMessage.style.display = "block";
       return;
@@ -274,34 +390,59 @@ async function loadClients(db) {
 function createClientRow(client) {
   const row = document.createElement("tr");
   
-  // Calculate expiry date (assuming 1 year from start date)
-  const startDate = new Date(client.startDate);
-  const expiryDate = new Date(startDate.getTime() + (365 * 24 * 60 * 60 * 1000));
+  // Handle renewal date - check if it exists, if not calculate from start date
+  let renewalDate;
+  if (client.renewalDate) {
+    renewalDate = new Date(client.renewalDate);
+  } else if (client.startDate) {
+    // Calculate renewal date as start date + 1 year for existing clients without renewal date
+    const startDate = new Date(client.startDate);
+    renewalDate = new Date(startDate);
+    renewalDate.setFullYear(startDate.getFullYear() + 1);
+  } else {
+    renewalDate = new Date(); // fallback to today
+  }
+  
   const today = new Date();
   const thirtyDaysFromNow = new Date(today.getTime() + (30 * 24 * 60 * 60 * 1000));
   
-  // Determine status
+  // Determine status based on renewal date
   let status, statusClass;
-  if (expiryDate > today) {
-    if (expiryDate <= thirtyDaysFromNow) {
-      status = "Expiring Soon";
+  if (isNaN(renewalDate.getTime())) {
+    status = "Date Error";
+    statusClass = "status-expired";
+  } else if (renewalDate > today) {
+    if (renewalDate <= thirtyDaysFromNow) {
+      status = "Renewal Due Soon";
       statusClass = "status-expiring";
     } else {
       status = "Active";
       statusClass = "status-active";
     }
   } else {
-    status = "Expired";
+    status = "Renewal Overdue";
     statusClass = "status-expired";
   }
   
-  // Generate policy number
-  const policyNumber = `POL ${client.vehicleNumber.slice(-2)}`;
+  // Add renewal reminder highlighting
+  if (!isNaN(renewalDate.getTime())) {
+    if (renewalDate <= thirtyDaysFromNow && renewalDate > today) {
+      row.classList.add("renewal-reminder");
+    } else if (renewalDate <= today) {
+      row.classList.add("renewal-overdue");
+    }
+  }
+  
+  // Format renewal date for display
+  const renewalDateFormatted = isNaN(renewalDate.getTime()) ? 'Invalid Date' : renewalDate.toLocaleDateString();
   
   row.innerHTML = `
-    <td>${client.fullName}</td>
-    <td>${client.vehicleNumber}</td>
-    <td>${policyNumber}</td>
+    <td>${client.fullName || 'N/A'}</td>
+    <td>${client.phone || 'N/A'}</td>
+    <td>${client.email || 'N/A'}</td>
+    <td>${client.vehicleNumber || 'N/A'}</td>
+    <td>${client.policyType || 'N/A'}</td>
+    <td class="renewal-date">${renewalDateFormatted}</td>
     <td><span class="status-badge ${statusClass}">${status}</span></td>
     <td>
       <div class="action-buttons">

@@ -418,9 +418,24 @@ body {
 }
 
 .user-avatar img {
-  width: 100%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   height: 100%;
   object-fit: cover;
+}
+
+.user-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--majani-green);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .user-info {
@@ -1535,26 +1550,232 @@ textarea:focus {
 }
 
 .status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
 }
 
 .status-active {
-  background: #D1FAE5;
-  color: #065F46;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .status-expiring {
-  background: #FEF3C7;
-  color: #92400E;
+  background-color: #fff3cd;
+  color: #856404;
 }
 
 .status-expired {
-  background: #FEE2E2;
-  color: #991B1B;
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.renewal-reminder {
+  background-color: #fff3cd !important;
+  border-left: 4px solid #ffc107;
+}
+
+.renewal-overdue {
+  background-color: #f8d7da !important;
+  border-left: 4px solid #dc3545;
+}
+
+.renewal-reminder:hover,
+.renewal-overdue:hover {
+  background-color: rgba(255, 193, 7, 0.1) !important;
+}
+
+.renewal-date {
+  font-weight: 600;
+}
+
+.renewal-reminder .renewal-date {
+  color: #856404;
+}
+
+.renewal-overdue .renewal-date {
+  color: #721c24;
+}
+
+/* Renewal reminders section */
+.renewal-reminders-section {
+  margin-bottom: 2rem;
+}
+
+.reminder-count {
+  background: #dc3545;
+  color: white;
+  border-radius: 50%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 1.5rem;
+  text-align: center;
+  display: none;
+}
+
+.renewal-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.renewal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  background: var(--surface);
+  transition: all 0.2s;
+}
+
+.renewal-item:hover {
+  border-color: var(--majani-green);
+  box-shadow: var(--shadow-sm);
+}
+
+.renewal-info {
+  flex: 1;
+}
+
+.client-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.renewal-details {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.renewal-date-info {
+  text-align: center;
+  margin: 0 1rem;
+}
+
+.renewal-date {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.days-remaining {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+.days-remaining.warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.days-remaining.urgent {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.renewal-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Contact modal */
+.contact-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal-content h3 {
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-option {
+  display: block;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.contact-option:hover {
+  border-color: var(--majani-green);
+  background: var(--background);
+}
+
+/* Read-only field styling */
+.readonly-field {
+  background-color: #f8f9fa !important;
+  cursor: not-allowed;
+  color: #6c757d;
+}
+
+.field-help {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Add Client Button Container */
+.add-client-button-container {
+  margin: 2rem 0;
+  text-align: center;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--border-light);
+}
+
+.add-client-button-container .btn {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: 200px;
 }
 
 .action-buttons {
@@ -1901,6 +2122,39 @@ textarea:focus {
 .empty-state-description {
   font-size: 0.875rem;
   margin-bottom: 1.5rem;
+}
+
+/* Loading Page Styles */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--background);
+  padding: 1rem;
+}
+
+.loading-content {
+  text-align: center;
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+}
+
+.loading-content .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.loading-content p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 /* Login Page Styles */
