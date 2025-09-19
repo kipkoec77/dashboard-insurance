@@ -4,56 +4,248 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Login - Majani Insurance Agent System</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
   <style>
-    /* Clear theme overrides */
+    /* Login Page Styles - Matching Mockup */
     body {
       background: #f8fafc;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 0;
     }
+    
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    
     .login-container {
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-      max-width: 400px;
-      margin: 2rem auto;
-    }
-    .btn-primary {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      padding: 3rem;
+      max-width: 420px;
       width: 100%;
-      margin-top: 1rem;
+      animation: slideUp 0.6s ease-out;
     }
-    .btn-primary:hover {
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .login-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .logo-icon {
+      width: 60px;
+      height: 60px;
       background: #2563eb;
-    }
-    .form-group {
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 1rem;
+      position: relative;
     }
+    
+    .logo-icon i {
+      color: white;
+      font-size: 24px;
+    }
+    
+    /* Create hexagon effect */
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #2563eb;
+      transform: rotate(45deg);
+      border-radius: 4px;
+      z-index: -1;
+    }
+    
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+      letter-spacing: 0.5px;
+    }
+    
+    .login-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1f2937;
+      margin: 0;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
     .form-group label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
       color: #374151;
-    }
-    .form-group input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 8px;
       font-size: 14px;
     }
+    
+    .input-wrapper {
+      position: relative;
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      font-size: 16px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    
     .form-group input:focus {
       outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-group input::placeholder {
+      color: #9ca3af;
+    }
+    
+    .forgot-password {
+      display: block;
+      text-align: right;
+      color: #2563eb;
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+    
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+    }
+    
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+    
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+    
+    .btn-primary:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-primary.loading {
+      position: relative;
+      color: transparent;
+    }
+    
+    .btn-primary.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin-left: -10px;
+      margin-top: -10px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .alert-error {
+      background-color: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 14px;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 2rem;
+        margin: 1rem;
+      }
+      
+      .logo-icon {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .logo-icon i {
+        font-size: 20px;
+      }
+      
+      .logo-text {
+        font-size: 16px;
+      }
+      
+      .login-title {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -63,22 +255,29 @@
       <div class="login-container">
         <div class="login-header">
           <div class="logo">
-            <div class="logo-icon">🛡️</div>
+            <div class="logo-icon">
+              <i class="fas fa-check"></i>
+            </div>
             <div class="logo-text">MAJANI INSURANCE</div>
           </div>
-          <h1>Welcome Back!</h1>
-          <p class="login-subtitle">Please log in to continue managing your insurance business.</p>
+          <h1 class="login-title">Login</h1>
         </div>
         
         <form id="loginForm" class="login-form">
           <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope input-icon"></i>
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
           </div>
           
           <div class="form-group">
             <label for="password">Password</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock input-icon"></i>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
           </div>
           
           <a href="#" class="forgot-password">Forgot Password?</a>
@@ -93,6 +292,99 @@
 
   <!-- Firebase v9+ Modular SDK -->
   <script type="module" src="js/firebase.js"></script>
-  <script type="module" src="js/app.js"></script>
+  <script type="module">
+    // Import Firebase auth functions
+    import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    
+    // Login functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const errorMessage = document.getElementById('errorMessage');
+      
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const loginBtn = document.getElementById('loginBtn');
+        
+        // Simple validation
+        if (!email || !password) {
+          showError('Please fill in all fields');
+          return;
+        }
+        
+        // Show loading state
+        loginBtn.disabled = true;
+        loginBtn.classList.add('loading');
+        loginBtn.textContent = 'Logging in...';
+        
+        try {
+          // Try Firebase authentication first
+          if (window.firebaseServices && window.firebaseServices.auth) {
+            const userCredential = await signInWithEmailAndPassword(window.firebaseServices.auth, email, password);
+            const user = userCredential.user;
+            
+            // Store user session
+            localStorage.setItem('userLoggedIn', 'true');
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userInfo', JSON.stringify({
+              name: 'Dennis',
+              role: 'Insurance Agent',
+              email: email,
+              phone: '+254 700 000 000',
+              uid: user.uid
+            }));
+            
+            // Redirect to dashboard
+            window.location.href = 'index.html';
+          } else {
+            // Fallback to simple authentication if Firebase is not available
+            if (email === 'dennis@majaniinsurance.com' && password === 'password123') {
+              localStorage.setItem('userLoggedIn', 'true');
+              localStorage.setItem('userEmail', email);
+              localStorage.setItem('userInfo', JSON.stringify({
+                name: 'Dennis',
+                role: 'Insurance Agent',
+                email: email,
+                phone: '+254 700 000 000'
+              }));
+              
+              window.location.href = 'index.html';
+            } else {
+              showError('Invalid email or password. Try: dennis@majaniinsurance.com / password123');
+            }
+          }
+        } catch (error) {
+          console.error('Firebase login error:', error);
+          showError('Login failed: ' + error.message);
+        } finally {
+          // Reset button state
+          loginBtn.disabled = false;
+          loginBtn.classList.remove('loading');
+          loginBtn.textContent = 'Login';
+        }
+      });
+      
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = 'block';
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+        }, 5000);
+      }
+      
+      // Check if user is already logged in
+      if (localStorage.getItem('userLoggedIn') === 'true') {
+        // Small delay to prevent redirect loops
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 100);
+      }
+      
+    });
+  </script>
 </body>
 </html>

@@ -1,19 +1,201 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Commissions - Majani Insurance Agent System</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAJANI INSURANCE - Commissions</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">MAJANI INSURANCE</div>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="clients.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Clients</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="policies.html" class="nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Policies</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="claims.html" class="nav-link">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Claims</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="commissions.html" class="nav-link active">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Commissions</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">D</div>
+                    <div class="user-info">
+                        <div class="user-name">Dennis</div>
+                        <div class="user-role">Insurance Agent</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
     <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">Commissions</div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search..." id="globalSearch">
+                    </div>
+                    
+                    <div class="navbar-actions">
+                        <button class="action-btn notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge">3</div>
+                        </button>
+                        
+                        <div class="user-menu">
+                            <button class="user-profile-btn" id="userProfileBtn">
+                                <div class="user-avatar">D</div>
+                                <div class="user-info">
+                                    <div class="user-name">Dennis</div>
+                                    <div class="user-role">Insurance Agent</div>
+                                </div>
+                                <i class="fas fa-chevron-down dropdown-icon"></i>
+                            </button>
+                            
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="settings.html" class="dropdown-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Profile</span>
+                                </a>
+                                <a href="settings.html" class="dropdown-item">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="login.html" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
       <div class="page-content">
-        <h1 class="page-title">Commissions</h1>
-        <p class="page-subtitle">This feature is under development and will be implemented soon.</p>
+                <div class="page-header">
+                    <h1>Commissions Management</h1>
+                    <p>Track and manage commission earnings</p>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-value">KES 45,000</h3>
+                            <p class="stat-label">This Month</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-value">KES 180,000</h3>
+                            <p class="stat-label">This Quarter</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-value">KES 540,000</h3>
+                            <p class="stat-label">This Year</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Commission History</h3>
+                    </div>
+                    
+                    <div class="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Client Name</th>
+                                    <th>Policy Number</th>
+                                    <th>Commission Rate</th>
+                                    <th>Commission Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="commissionsTableBody">
+                                <!-- Commission data will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
       </div>
     </main>
   </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
 </body>
 </html>

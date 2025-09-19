@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAJANI INSURANCE - Vehicle Insurance Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">MAJANI INSURANCE</div>
+                </div>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="#" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-section="clients">
+                        <i class="fas fa-users"></i>
+                        <span>Clients</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-section="policies">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Policies</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-section="claims">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Claims</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-section="commissions">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Commissions</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="#" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">D</div>
+                    <div class="user-info">
+                        <div class="user-name">Dennis</div>
+                        <div class="user-role">Insurance Agent</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title" id="pageTitle">Dashboard</div>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search..." id="globalSearch">
+                    </div>
+                    
+                    <div class="navbar-actions">
+                        <button class="action-btn notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge">3</div>
+                        </button>
+                        
+                        <div class="user-menu">
+                            <button class="user-profile-btn" id="userProfileBtn">
+                                <div class="user-avatar">D</div>
+                                <div class="user-info">
+                                    <div class="user-name">Dennis</div>
+                                    <div class="user-role">Insurance Agent</div>
+                                </div>
+                                <i class="fas fa-chevron-down dropdown-icon"></i>
+                            </button>
+                            
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="#" class="dropdown-item" data-action="profile">
+                                    <i class="fas fa-user"></i>
+                                    <span>Profile</span>
+                                </a>
+                                <a href="#" class="dropdown-item" data-action="settings">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" data-action="logout">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content Container -->
+            <div class="page-content" id="pageContent">
+                
+                <!-- DASHBOARD SECTION -->
+                <section class="content-section active" id="dashboard-section">
+                    <div class="welcome-section">
+                        <div class="welcome-card">
+                            <div class="welcome-content">
+                                <h1>Welcome Dennis 👋</h1>
+                                <p>Manage your insurance clients and policies efficiently</p>
+                            </div>
+                            <div class="welcome-image">
+                                <i class="fas fa-car"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Quick Actions -->
+                        <div class="quick-actions-card">
+                            <h3>Quick Actions</h3>
+                            <div class="quick-actions">
+                                <button class="action-card" data-action="view-clients">
+                                    <i class="fas fa-users"></i>
+                                    <span>View Clients</span>
+                                </button>
+                                <button class="action-card" data-action="view-commissions">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>View Commissions</span>
+                                </button>
+                                <button class="action-card" data-action="add-client">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add Client</span>
+                                </button>
+                                <button class="action-card" data-action="export-data">
+                                    <i class="fas fa-download"></i>
+                                    <span>Export Data</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Renewal Alerts -->
+                        <div class="renewal-alerts-card">
+                            <h3>Renewal Alerts</h3>
+                            <div class="alert-content">
+                                <div class="alert-number">3</div>
+                                <div class="alert-text">policies expiring soon</div>
+                                <a href="#" class="view-all-link" data-section="clients">View all</a>
+                            </div>
+                        </div>
+
+                        <!-- Commissions Overview -->
+                        <div class="commissions-card">
+                            <h3>Commissions</h3>
+                            <div class="commission-chart">
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                            <div class="commission-total">KES 45,000</div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Overview -->
+                    <div class="stats-section">
+                        <div class="stat-card">
+                            <div class="stat-icon clients">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">156</h3>
+                                <p class="stat-label">Total Clients</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon policies">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">142</h3>
+                                <p class="stat-label">Active Policies</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon claims">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">8</h3>
+                                <p class="stat-label">Pending Claims</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">KES 2.4M</h3>
+                                <p class="stat-label">Total Revenue</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CLIENTS SECTION -->
+                <section class="content-section" id="clients-section">
+                    <div class="page-header">
+                        <h1>Client Management</h1>
+                        <p>Manage your insurance clients and their policies</p>
+                    </div>
+
+                    <!-- Add New Client Form -->
+                    <div class="form-container" id="addClientForm">
+                        <h3 class="form-title">Add New Client</h3>
+                        <form id="clientForm" class="client-form">
+                            <div class="form-section">
+                                <h4 class="section-title">CLIENT INFORMATION</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="fullName">Full Name</label>
+                                        <input type="text" id="fullName" name="fullName" placeholder="Enter client's full name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        <input type="tel" id="phone" name="phone" placeholder="e.g., +254 700 123 456" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email Address</label>
+                                        <input type="email" id="email" name="email" placeholder="client@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" id="address" name="address" placeholder="Enter client's address">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4 class="section-title">VEHICLE INFORMATION</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="vehicleNumber">Registration Number</label>
+                                        <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="e.g., KAA 123A" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="startDate">Start Date</label>
+                                        <input type="date" id="startDate" name="startDate" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="renewalDate">Renewal Date (Auto-calculated)</label>
+                                        <input type="date" id="renewalDate" name="renewalDate" readonly class="readonly-field">
+                                        <small class="field-help">Automatically set to one year after start date</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="policyType">Policy Type</label>
+                                        <select id="policyType" name="policyType" required>
+                                            <option value="">Select Policy Type</option>
+                                            <option value="Comprehensive">Comprehensive</option>
+                                            <option value="Third Party">Third Party</option>
+                                            <option value="Third Party Fire & Theft">Third Party Fire & Theft</option>
+                                            <option value="Act Only">Act Only</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="premium">Premium (KSh)</label>
+                                        <input type="number" id="premium" name="premium" step="0.01" min="0" placeholder="0.00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="earned">Earned (KSh)</label>
+                                        <input type="number" id="earned" name="earned" step="0.01" min="0" placeholder="0.00">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="commission">Commission Earned (KSh)</label>
+                                        <input type="number" id="commission" name="commission" step="0.01" min="0" placeholder="0.00" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submitBtn" class="btn btn-primary">Save Client</button>
+                        </form>
+                        
+                        <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+                        <div id="errorMessage" class="alert alert-error" style="display: none;"></div>
+                    </div>
+
+                    <!-- Clients List -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Clients List</h3>
+                            <div class="table-filters">
+                                <button class="filter-btn active" data-filter="all">All</button>
+                                <button class="filter-btn" data-filter="active">Active</button>
+                                <button class="filter-btn" data-filter="expiring">Expiring Soon</button>
+                                <button class="filter-btn" data-filter="expired">Expired</button>
+                            </div>
+                        </div>
+                        
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" class="search-input" placeholder="Search clients..." id="clientSearch">
+                        </div>
+                        
+                        <div id="clientsTable" class="clients-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Client Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Vehicle Reg</th>
+                                        <th>Policy Type</th>
+                                        <th>Renewal Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientsTableBody">
+                                    <!-- Sample data -->
+                                    <tr>
+                                        <td>John Doe</td>
+                                        <td>+254 700 123 456</td>
+                                        <td>john.doe@email.com</td>
+                                        <td>KAA 123A</td>
+                                        <td>Comprehensive</td>
+                                        <td>2024-12-15</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-secondary" onclick="app.editClient(1)">✏️</button>
+                                                <button class="btn btn-danger" onclick="app.deleteClient(1)">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jane Smith</td>
+                                        <td>+254 700 987 654</td>
+                                        <td>jane.smith@email.com</td>
+                                        <td>KBB 456B</td>
+                                        <td>Third Party</td>
+                                        <td>2024-01-20</td>
+                                        <td><span class="status-badge status-expiring">Expiring Soon</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-secondary" onclick="app.editClient(2)">✏️</button>
+                                                <button class="btn btn-danger" onclick="app.deleteClient(2)">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div id="noClientsMessage" class="empty-state" style="display: none;">
+                            <div class="empty-state-icon">👥</div>
+                            <div class="empty-state-title">No clients found</div>
+                            <div class="empty-state-description">Click the button below to add your first client.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- POLICIES SECTION -->
+                <section class="content-section" id="policies-section">
+                    <div class="page-header">
+                        <h1>Policy Management</h1>
+                        <p>Manage insurance policies and renewals</p>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Policies List</h3>
+                            <button class="btn btn-primary" onclick="app.showAddPolicyForm()">Add New Policy</button>
+                        </div>
+                        
+                        <div class="table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Policy Number</th>
+                                        <th>Client Name</th>
+                                        <th>Vehicle Reg</th>
+                                        <th>Policy Type</th>
+                                        <th>Premium</th>
+                                        <th>Start Date</th>
+                                        <th>Renewal Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="policiesTableBody">
+                                    <!-- Sample data -->
+                                    <tr>
+                                        <td>POL-001</td>
+                                        <td>John Doe</td>
+                                        <td>KAA 123A</td>
+                                        <td>Comprehensive</td>
+                                        <td>KES 25,000</td>
+                                        <td>2023-12-15</td>
+                                        <td>2024-12-15</td>
+                                        <td><span class="status-badge status-active">Active</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-secondary">✏️</button>
+                                                <button class="btn btn-danger">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CLAIMS SECTION -->
+                <section class="content-section" id="claims-section">
+                    <div class="page-header">
+                        <h1>Claims Management</h1>
+                        <p>Process and track insurance claims</p>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Claims List</h3>
+                            <button class="btn btn-primary" onclick="app.showAddClaimForm()">Add New Claim</button>
+                        </div>
+                        
+                        <div class="table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Claim Number</th>
+                                        <th>Client Name</th>
+                                        <th>Vehicle Reg</th>
+                                        <th>Claim Type</th>
+                                        <th>Amount</th>
+                                        <th>Date Filed</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="claimsTableBody">
+                                    <!-- Sample data -->
+                                    <tr>
+                                        <td>CLM-001</td>
+                                        <td>John Doe</td>
+                                        <td>KAA 123A</td>
+                                        <td>Accident</td>
+                                        <td>KES 50,000</td>
+                                        <td>2024-01-15</td>
+                                        <td><span class="status-badge status-expiring">Pending</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-secondary">✏️</button>
+                                                <button class="btn btn-danger">🗑️</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- COMMISSIONS SECTION -->
+                <section class="content-section" id="commissions-section">
+                    <div class="page-header">
+                        <h1>Commissions Management</h1>
+                        <p>Track and manage commission earnings</p>
+                    </div>
+
+                    <div class="stats-section">
+                        <div class="stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">KES 45,000</h3>
+                                <p class="stat-label">This Month</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">KES 180,000</h3>
+                                <p class="stat-label">This Quarter</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 class="stat-value">KES 540,000</h3>
+                                <p class="stat-label">This Year</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3 class="table-title">Commission History</h3>
+                        </div>
+                        
+                        <div class="table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Client Name</th>
+                                        <th>Policy Number</th>
+                                        <th>Commission Rate</th>
+                                        <th>Commission Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="commissionsTableBody">
+                                    <!-- Sample data -->
+                                    <tr>
+                                        <td>2024-01-15</td>
+                                        <td>John Doe</td>
+                                        <td>POL-001</td>
+                                        <td>15%</td>
+                                        <td>KES 3,750</td>
+                                        <td><span class="status-badge status-active">Paid</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SETTINGS SECTION -->
+                <section class="content-section" id="settings-section">
+                    <div class="page-header">
+                        <h1>Settings</h1>
+                        <p>Manage your account and system preferences</p>
+                    </div>
+
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <h3>Profile Information</h3>
+                            <form class="settings-form">
+                                <div class="form-group">
+                                    <label for="profileName">Full Name</label>
+                                    <input type="text" id="profileName" value="Dennis" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profileEmail">Email</label>
+                                    <input type="email" id="profileEmail" value="dennis@majaniinsurance.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="profilePhone">Phone</label>
+                                    <input type="tel" id="profilePhone" value="+254 700 000 000" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Change Password</h3>
+                            <form class="settings-form">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm Password</label>
+                                    <input type="password" id="confirmPassword" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

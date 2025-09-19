@@ -1,14 +1,42 @@
 {
-  "name": "majani-insurance-cms",
+  "name": "majani-insurance-management",
   "version": "1.0.0",
-  "description": "Majani Insurance Agent Management System",
-  "main": "index.html",
+  "description": "Vehicle Insurance Client Management System - A comprehensive web application for managing insurance clients, policies, claims, and commissions",
+  "main": "public/index.html",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Static site ready - files already in public directory'",
-    "deploy": "vercel --prod"
+    "start": "npx http-server public -p 3000 -o",
+    "dev": "npx live-server public --port=3000 --open=/index.html",
+    "build": "echo 'No build process needed for static files'",
+    "test": "echo 'No tests specified'"
   },
-  "keywords": ["insurance", "cms", "agent", "management"],
-  "author": "Tech Savvy",
-  "license": "ISC"
+  "keywords": [
+    "insurance",
+    "management",
+    "vehicle",
+    "client",
+    "policy",
+    "claims",
+    "dashboard",
+    "responsive",
+    "javascript",
+    "html5",
+    "css3"
+  ],
+  "author": "MAJANI INSURANCE",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/majani-insurance/vehicle-insurance-management"
+  },
+  "bugs": {
+    "url": "https://github.com/majani-insurance/vehicle-insurance-management/issues"
+  },
+  "homepage": "https://github.com/majani-insurance/vehicle-insurance-management#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }

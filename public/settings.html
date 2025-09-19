@@ -1,342 +1,230 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Settings - Majani Insurance Agent System</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAJANI INSURANCE - Settings</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <div class="sidebar-header">
-        <a href="dashboard.html" class="logo">
-          <div class="logo-icon">M</div>
-          <div class="logo-text">MAJANI INSURANCE</div>
-        </a>
-      </div>
-      <div class="sidebar-nav">
-        <div class="nav-item">
-          <a href="dashboard.html" class="nav-link">
-            <div class="nav-icon"></div>
-            <span>Dashboard</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="clients.html" class="nav-link">
-            <div class="nav-icon"></div>
-            <span>Clients</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="policies.html" class="nav-link">
-            <div class="nav-icon"></div>
-            <span>Policies</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="claims.html" class="nav-link">
-            <div class="nav-icon"></div>
-            <span>Claims</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="commissions.html" class="nav-link">
-            <div class="nav-icon"></div>
-            <span>Commissions</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="reports.html" class="nav-link">
-            <div class="nav-icon"></div>
-            <span>Reports</span>
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="settings.html" class="nav-link active">
-            <div class="nav-icon"></div>
-            <span>Settings</span>
-          </a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- Top Navigation -->
-      <header class="top-nav">
-        <div class="search-container">
-          <div class="search-icon"></div>
-          <input type="text" class="search-input" placeholder="Search settings...">
-        </div>
-        <div class="nav-actions">
-          <button class="notification-btn">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="logo-text">MAJANI INSURANCE</div>
+                </div>
+                <button class="sidebar-close" id="sidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             
-            <div class="notification-badge"></div>
-          </button>
-          <div class="user-profile" onclick="toggleUserMenu()">
-            <div class="user-avatar" id="userAvatar">D</div>
-            <div class="user-info">
-              <div class="user-name" id="userName">Dennis</div>
-              <div class="user-role">Insurance Agent</div>
+            <div class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="clients.html" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Clients</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="policies.html" class="nav-link">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Policies</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="claims.html" class="nav-link">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Claims</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="commissions.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Commissions</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="settings.html" class="nav-link active">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </div>
             </div>
-          </div>
-        </div>
-      </header>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="user-avatar">D</div>
+                    <div class="user-info">
+                        <div class="user-name">Dennis</div>
+                        <div class="user-role">Insurance Agent</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
-      <!-- Page Content -->
-      <div class="page-content">
-        <div class="page-header">
-          <h1 class="page-title">Settings</h1>
-          <p class="page-subtitle">Manage your account settings and preferences.</p>
-        </div>
-
-        <!-- Settings Tabs -->
-        <div class="settings-container">
-          <div class="settings-tabs">
-            <button class="tab-btn active" data-tab="profile"> Profile</button>
-            <button class="tab-btn" data-tab="business"> Business</button>
-            <button class="tab-btn" data-tab="preferences"> Preferences</button>
-            <button class="tab-btn" data-tab="security"> Security</button>
-          </div>
-
-          <!-- Profile Settings -->
-          <div class="settings-content" id="profile-tab">
-            <div class="form-container">
-              <h3 class="form-title">Profile Information</h3>
-              <form id="profileForm" class="settings-form">
-                <div class="profile-avatar-section">
-                  <div class="avatar-container">
-                    <div class="user-avatar-large" id="profileAvatar">D</div>
-                    <button type="button" class="btn btn-secondary" onclick="changeAvatar()">Change Avatar</button>
-                  </div>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="page-title">Settings</div>
                 </div>
                 
-                <div class="form-section">
-                  <h4 class="section-title">PERSONAL INFORMATION</h4>
-                  <div class="form-grid">
-                    <div class="form-group">
-                      <label for="profileName">Full Name</label>
-                      <input type="text" id="profileName" name="profileName" placeholder="Enter your full name">
-                    </div>
-                    <div class="form-group">
-                      <label for="profileEmail">Email Address</label>
-                      <input type="email" id="profileEmail" name="profileEmail" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="profilePhone">Phone Number</label>
-                      <input type="tel" id="profilePhone" name="profilePhone" placeholder="+254 700 123 456">
-                    </div>
-                    <div class="form-group">
-                      <label for="profileAddress">Address</label>
-                      <input type="text" id="profileAddress" name="profileAddress" placeholder="Enter your address">
-                    </div>
-                  </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Update Profile</button>
-              </form>
-              
-              <div id="profileSuccessMessage" class="alert alert-success" style="display: none;"></div>
-              <div id="profileErrorMessage" class="alert alert-error" style="display: none;"></div>
-            </div>
-          </div>
-
-          <!-- Business Settings -->
-          <div class="settings-content" id="business-tab" style="display: none;">
-            <div class="form-container">
-              <h3 class="form-title">Business Settings</h3>
-              <form id="businessForm" class="settings-form">
-                <div class="form-section">
-                  <h4 class="section-title">COMPANY INFORMATION</h4>
-                  <div class="form-grid">
-                    <div class="form-group">
-                      <label for="companyName">Company Name</label>
-                      <input type="text" id="companyName" name="companyName" placeholder="Majani Insurance Agency">
-                    </div>
-                    <div class="form-group">
-                      <label for="companyAddress">Company Address</label>
-                      <input type="text" id="companyAddress" name="companyAddress" placeholder="Enter company address">
-                    </div>
-                    <div class="form-group">
-                      <label for="companyPhone">Company Phone</label>
-                      <input type="tel" id="companyPhone" name="companyPhone" placeholder="+254 700 123 456">
-                    </div>
-                    <div class="form-group">
-                      <label for="companyEmail">Company Email</label>
-                      <input type="email" id="companyEmail" name="companyEmail" placeholder="info@majaniinsurance.com">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-section">
-                  <h4 class="section-title">DEFAULT COMMISSION RATES</h4>
-                  <div class="form-grid">
-                    <div class="form-group">
-                      <label for="defaultCommission">Default Commission (%)</label>
-                      <input type="number" id="defaultCommission" name="defaultCommission" step="0.1" min="0" max="100" placeholder="15.0">
-                    </div>
-                    <div class="form-group">
-                      <label for="comprehensiveRate">Comprehensive Rate (%)</label>
-                      <input type="number" id="comprehensiveRate" name="comprehensiveRate" step="0.1" min="0" max="100" placeholder="20.0">
-                    </div>
-                    <div class="form-group">
-                      <label for="thirdPartyRate">Third Party Rate (%)</label>
-                      <input type="number" id="thirdPartyRate" name="thirdPartyRate" step="0.1" min="0" max="100" placeholder="15.0">
-                    </div>
-                    <div class="form-group">
-                      <label for="actOnlyRate">Act Only Rate (%)</label>
-                      <input type="number" id="actOnlyRate" name="actOnlyRate" step="0.1" min="0" max="100" placeholder="10.0">
-                    </div>
-                  </div>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Save Business Settings</button>
-              </form>
-              
-              <div id="businessSuccessMessage" class="alert alert-success" style="display: none;"></div>
-              <div id="businessErrorMessage" class="alert alert-error" style="display: none;"></div>
-            </div>
-          </div>
-
-          <!-- Preferences -->
-          <div class="settings-content" id="preferences-tab" style="display: none;">
-            <div class="form-container">
-              <h3 class="form-title">System Preferences</h3>
-              <form id="preferencesForm" class="settings-form">
-                <div class="form-section">
-                  <h4 class="section-title">DISPLAY SETTINGS</h4>
-                  <div class="preference-group">
-                    <div class="preference-item">
-                      <label class="preference-label">
-                        <span class="preference-text">Dark Mode</span>
-                        <span class="preference-description">Switch to dark theme</span>
-                      </label>
-                      <label class="toggle-switch">
-                        <input type="checkbox" id="darkMode" name="darkMode">
-                        <span class="toggle-slider"></span>
-                      </label>
+                <div class="navbar-right">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search..." id="globalSearch">
                     </div>
                     
-                    <div class="preference-item">
-                      <label class="preference-label">
-                        <span class="preference-text">Language</span>
-                        <span class="preference-description">Choose your preferred language</span>
-                      </label>
-                      <select id="language" name="language" class="form-select">
-                        <option value="en">English</option>
-                        <option value="sw">Swahili</option>
-                      </select>
+                    <div class="navbar-actions">
+                        <button class="action-btn notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <div class="notification-badge">3</div>
+                        </button>
+                        
+                        <div class="user-menu">
+                            <button class="user-profile-btn" id="userProfileBtn">
+                                <div class="user-avatar">D</div>
+                                <div class="user-info">
+                                    <div class="user-name">Dennis</div>
+                                    <div class="user-role">Insurance Agent</div>
+                                </div>
+                                <i class="fas fa-chevron-down dropdown-icon"></i>
+                            </button>
+                            
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="settings.html" class="dropdown-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Profile</span>
+                                </a>
+                                <a href="settings.html" class="dropdown-item">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Settings</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="login.html" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>Settings</h1>
+                    <p>Manage your account and system preferences</p>
                 </div>
 
-                <div class="form-section">
-                  <h4 class="section-title">NOTIFICATION SETTINGS</h4>
-                  <div class="preference-group">
-                    <div class="preference-item">
-                      <label class="preference-label">
-                        <span class="preference-text">Email Notifications</span>
-                        <span class="preference-description">Receive email alerts for important updates</span>
-                      </label>
-                      <label class="toggle-switch">
-                        <input type="checkbox" id="emailNotifications" name="emailNotifications" checked>
-                        <span class="toggle-slider"></span>
-                      </label>
+                <div class="settings-container">
+                    <div class="settings-section">
+                        <h3>Profile Information</h3>
+                        <form id="profileForm" class="settings-form">
+                            <div class="form-group">
+                                <label for="profileName">Full Name</label>
+                                <input type="text" id="profileName" name="profileName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmail">Email</label>
+                                <input type="email" id="profileEmail" name="profileEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePhone">Phone</label>
+                                <input type="tel" id="profilePhone" name="profilePhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileRole">Role</label>
+                                <input type="text" id="profileRole" name="profileRole" readonly class="readonly-field">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </form>
+                        
+                        <div id="profileSuccessMessage" class="alert alert-success" style="display: none;"></div>
+                        <div id="profileErrorMessage" class="alert alert-error" style="display: none;"></div>
                     </div>
-                    
-                    <div class="preference-item">
-                      <label class="preference-label">
-                        <span class="preference-text">Policy Expiry Alerts</span>
-                        <span class="preference-description">Get notified when policies are about to expire</span>
-                      </label>
-                      <label class="toggle-switch">
-                        <input type="checkbox" id="expiryAlerts" name="expiryAlerts" checked>
-                        <span class="toggle-slider"></span>
-                      </label>
-                    </div>
-                    
-                    <div class="preference-item">
-                      <label class="preference-label">
-                        <span class="preference-text">Commission Updates</span>
-                        <span class="preference-description">Receive notifications about commission changes</span>
-                      </label>
-                      <label class="toggle-switch">
-                        <input type="checkbox" id="commissionUpdates" name="commissionUpdates">
-                        <span class="toggle-slider"></span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="form-section">
-                  <h4 class="section-title">DASHBOARD CUSTOMIZATION</h4>
-                  <div class="form-grid">
-                    <div class="form-group">
-                      <label for="defaultPage">Default Page</label>
-                      <select id="defaultPage" name="defaultPage" class="form-select">
-                        <option value="dashboard">Dashboard</option>
-                        <option value="clients">Clients</option>
-                        <option value="policies">Policies</option>
-                        <option value="commissions">Commissions</option>
-                      </select>
+                    <div class="settings-section">
+                        <h3>Change Password</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label for="currentPassword">Current Password</label>
+                                <input type="password" id="currentPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" id="newPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                      <label for="itemsPerPage">Items Per Page</label>
-                      <select id="itemsPerPage" name="itemsPerPage" class="form-select">
-                        <option value="10">10</option>
-                        <option value="25" selected>25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                      </select>
+
+                    <div class="settings-section">
+                        <h3>System Preferences</h3>
+                        <form class="settings-form">
+                            <div class="form-group">
+                                <label for="theme">Theme</label>
+                                <select id="theme">
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="auto">Auto</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="language">Language</label>
+                                <select id="language">
+                                    <option value="en">English</option>
+                                    <option value="sw">Swahili</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notifications">Email Notifications</label>
+                                <select id="notifications">
+                                    <option value="all">All</option>
+                                    <option value="important">Important Only</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                        </form>
                     </div>
-                  </div>
+
+                    <div class="settings-section">
+                        <h3>Account Actions</h3>
+                        <div class="settings-form">
+                            <button type="button" class="btn btn-secondary" onclick="exportData()">Export Data</button>
+                            <button type="button" class="btn btn-danger" onclick="deleteAccount()">Delete Account</button>
+                        </div>
+                    </div>
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Save Preferences</button>
-              </form>
-              
-              <div id="preferencesSuccessMessage" class="alert alert-success" style="display: none;"></div>
-              <div id="preferencesErrorMessage" class="alert alert-error" style="display: none;"></div>
             </div>
-          </div>
+        </main>
+    </div>
 
-          <!-- Security Settings -->
-          <div class="settings-content" id="security-tab" style="display: none;">
-            <div class="form-container">
-              <h3 class="form-title">Security Settings</h3>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
 
-              <!-- Account Actions -->
-              <div class="security-section">
-                <h4 class="section-title">ACCOUNT ACTIONS</h4>
-                <div class="account-actions">
-                  <div class="action-item">
-                    <div class="action-info">
-                      <h5>Export Data</h5>
-                      <p>Download all your client and policy data</p>
-                    </div>
-                    <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
-                  </div>
-                  
-                  <div class="action-item">
-                    <div class="action-info">
-                      <h5>Delete Account</h5>
-                      <p>Permanently delete your account and all data</p>
-                    </div>
-                    <button class="btn btn-danger" onclick="deleteAccount()">Delete Account</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Firebase v9+ Modular SDK -->
-  <script type="module" src="js/firebase.js"></script>
-  <script type="module" src="js/settings.js"></script>
+    <!-- Scripts -->
+    <script src="../script.js"></script>
 </body>
 </html>
